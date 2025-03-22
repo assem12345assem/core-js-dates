@@ -305,7 +305,8 @@ function getWorkSchedule(period, countWorkDays, countOffDays) {
  * Date(2020, 2, 1) => true
  */
 function isLeapYear(date) {
-  throw new Error('Not implemented');
+  console.log(date);
+  if(date.getFullYear() % 4 === 0) return true;
 }
 
 module.exports = {
