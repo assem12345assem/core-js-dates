@@ -171,7 +171,7 @@ function getCountWeekendsInMonth(month, year) {
   let count = 0;
   let days = end.getDate();
   while (days > 0) {
-    if(end.getDay() === 0 || end.getDay() === 6) count++;
+    if (end.getDay() === 0 || end.getDay() === 6) count += 1;
     days -= 1;
     end.setDate(end.getDate() - 1);
   }
@@ -216,14 +216,14 @@ function getWeekNumberByDate(date) {
  */
 function getNextFridayThe13th(date) {
   const currentDate = new Date(date);
-  while (true) {
+  while (currentDate.getFullYear() < currentDate.getFullYear() + 100) {
     const day = currentDate.getDay();
-    if(day === 5) {
-      if(currentDate.getDate() === 13) return currentDate;
-      currentDate.setDate(currentDate.getDate() +7);
-      continue;
+    if (day === 5) {
+      if (currentDate.getDate() === 13) return currentDate;
+      currentDate.setDate(currentDate.getDate() + 7);
+    } else {
+      currentDate.setDate(currentDate.getDate() + 1);
     }
-    currentDate.setDate(currentDate.getDate() + 1);
   }
   return currentDate;
 }
@@ -241,9 +241,9 @@ function getNextFridayThe13th(date) {
  */
 function getQuarter(date) {
   const month = date.getMonth();
-  if(month <= 2) return 1;
-  if(month <= 5) return 2;
-  if(month <= 8) return 3;
+  if (month <= 2) return 1;
+  if (month <= 5) return 2;
+  if (month <= 8) return 3;
   return 4;
 }
 
@@ -268,23 +268,23 @@ function getQuarter(date) {
 function getWorkSchedule(period, countWorkDays, countOffDays) {
   const arr = [];
   const startArr = period.start.split('-');
-  const start = new Date(startArr[2], startArr[1]-1, startArr[0]);
+  const start = new Date(startArr[2], startArr[1] - 1, startArr[0]);
   const endArr = period.end.split('-');
-  const end = new Date(endArr[2], endArr[1]-1, endArr[0]);
+  const end = new Date(endArr[2], endArr[1] - 1, endArr[0]);
   while (start <= end) {
-    for (let i = 0; i < countWorkDays; i++) {
-      if(start <= end) {
+    for (let i = 0; i < countWorkDays; i += 1) {
+      if (start <= end) {
         let day = start.getDate();
-        if(day < 10) day = `0${day}`;
-        let month = start.getMonth() +1;
-        if(month < 10) month = `0${month}`;
+        if (day < 10) day = `0${day}`;
+        let month = start.getMonth() + 1;
+        if (month < 10) month = `0${month}`;
         const year = start.getFullYear();
         arr.push(`${day}-${month}-${year}`);
         start.setDate(start.getDate() + 1);
       }
     }
-    for (let i = 0; i < countOffDays; i++) {
-      if(start <= end) {
+    for (let i = 0; i < countOffDays; i += 1) {
+      if (start <= end) {
         start.setDate(start.getDate() + 1);
       }
     }
@@ -305,8 +305,7 @@ function getWorkSchedule(period, countWorkDays, countOffDays) {
  * Date(2020, 2, 1) => true
  */
 function isLeapYear(date) {
-  console.log(date);
-  if(date.getFullYear() % 4 === 0) return true;
+  return date.getFullYear() % 4 === 0;
 }
 
 module.exports = {
